@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>THREE Instanced Group Mesh Example</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="../node_modules/three/build/three.js"></script>
+    <script src="../node_modules/three/examples/js/controls/OrbitControls.js"></script>
+    <script src="../dist/THREE.InstancedGroupMesh.js"></script>
+    <script>
+      var mesh, renderer, scene, camera, controls;
+
+      function createGroup() {
+        const group = new THREE.Group();
+
+        const sphere = new THREE.Mesh(
+          new THREE.SphereGeometry(3, 8, 8),
+          new THREE.MeshLambertMaterial({ color: 0xff0000 })
+        );
+        group.add(sphere);
+
+        const sphereClone = sphere.clone();
+        sphereClone.position.set(4, 4, 4);
+        sphereClone.scale.set(0.5, 0.5, 1);
+        group.add(sphereClone);
+
+        const box = new THREE.Mesh(
+          new THREE.BoxBufferGeometry(3, 3, 3),
+          new THREE.MeshLambertMaterial({ color: 0x00ff00 })
+        );
+        box.position.set(-3, -3, -3);
+        group.add(box);
+
+        return group;
+      }
+
+      function rand(base) {
+        return Math.random() * base;
+      }
+
+      function getMatrix(position, scale) {
+        const obj = new THREE.Object3D();
+        obj.position.set(position, position, position);
+        obj.scale.multiplyScalar(scale);
+        obj.updateMatrix();
+        return obj.matrix;
+      }
+
+      function init() {
+        // renderer
+        renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        document.body.appendChild(renderer.domElement);
+
+        // scene
+        scene = new THREE.Scene();
+
+        // camera
+        camera = new THREE.PerspectiveCamera(
+          40,
+          window.innerWidth / window.innerHeight,
+          1,
+          10000
+        );
+        camera.position.set(50, 50, -50);
+
+        // controls
+        controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+        // ambient
+        scene.add(new THREE.AmbientLight(0x333333));
+
+        // light
+        var light = new THREE.DirectionalLight(0xffffff, 1);
+        light.position.set(20, 20, 0);
+        scene.add(light);
+
+        const group = createGroup();
+
+        const instancedGroupMesh = new THREE.InstancedGroupMesh(group, 4);
+        instancedGroupMesh.setMatrixAt(0, getMatrix(0, 1));
+        instancedGroupMesh.setMatrixAt(1, getMatrix(-15, 0.5));
+        instancedGroupMesh.setMatrixAt(2, getMatrix(-30, 1));
+        instancedGroupMesh.setMatrixAt(3, getMatrix(20, 2));
+        scene.add(instancedGroupMesh);
+      }
+
+      function animate() {
+        requestAnimationFrame(animate);
+
+        renderer.render(scene, camera);
+      }
+
+      init();
+      animate();
+    </script>
+  </body>
+</html>

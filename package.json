@@ -1,0 +1,32 @@
+{
+  "name": "three-instanced-group-mesh",
+  "version": "1.0.0",
+  "description": "instanced group mesh support for three.js",
+  "keywords": [
+    "three.js",
+    "instanced"
+  ],
+  "main": "dist/THREE.InstancedGroupMesh.common.js",
+  "module": "dist/THREE.InstancedGroupMesh.esm.js",
+  "typings": "index.d.ts",
+  "scripts": {
+    "watch": "rollup -c --watch",
+    "build": "rollup -c",
+    "declaration": "tsc -d --emitDeclarationOnly --outDir ./"
+  },
+  "sideEffects": false,
+  "license": "MIT",
+  "author": "Troy",
+  "homepage": "https://github.com/troy351/three-instanced-group-mesh",
+  "peerDependencies": {
+    "three": "^0.114.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-buble": "^0.21.1",
+    "@rollup/plugin-typescript": "^4.0.0",
+    "rollup": "^1.32.1",
+    "rollup-plugin-terser": "^5.2.0",
+    "tslib": "^1.11.1",
+    "typescript": "^3.8.3"
+  }
+}
