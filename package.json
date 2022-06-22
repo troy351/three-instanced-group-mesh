@@ -1,6 +1,6 @@
 {
   "name": "three-instanced-group-mesh",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "instanced group mesh support for three.js",
   "keywords": [
     "three.js",
