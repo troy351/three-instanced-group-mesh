@@ -1,5 +1,4 @@
 import typescript from "@rollup/plugin-typescript";
-import buble from '@rollup/plugin-buble';
 import { terser } from "rollup-plugin-terser";
 
 const DIST_FILE_NAME = 'THREE.InstancedGroupMesh'
@@ -36,8 +35,7 @@ export default [
       exclude: "node_modules/**"
     },
     plugins: [
-      typescript(),
-      buble()
+      typescript()
     ],
     external: ["three"]
   },
@@ -68,8 +66,7 @@ export default [
     },
     plugins: [
       typescript(),
-      terser(),
-      buble()
+      terser()
     ],
     external: ["three"]
   }
